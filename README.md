@@ -1,2 +1,2 @@
 # webchinelo
-programa feito em java
+programa feito em java usando JSF
