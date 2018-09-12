@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="index.xhtml">
+ <ui:define name="title">Listagem de Produtos</ui:define>	   
+ 
+  <ui:define name="container">
+   <div class="row">
+     <h:form id="formProduto">      
+     
+      <h:panelGroup id="containerPainelFormulario" >
+	
+		<h:panelGrid columns="2" rendered="#{produtoMB.naoEstaEmModoListagem}"  id="painelFormulario" >
+		
+				Modelo<h:inputText value="#{produtoMB.produto.modelo}" 
+								   id="modelo" 
+								   label="modelo" 
+								   required="true" 
+								   disabled="#{produtoMB.naoEstaEmModoInclusaoOuEdicao}" />
+						
+				Marca:<h:inputText value="#{produtoMB.produto.marca}" 
+								   id="marca" 
+								   label="marca" 
+								   required="true" 
+								   disabled="#{produtoMB.naoEstaEmModoInclusaoOuEdicao}" />
+								   
+				Tamanho:<h:inputText value="#{produtoMB.produto.tamanho}" 
+								     id="tamanho" 
+								     label="tamanho" 
+								     required="true" 
+								     disabled="#{produtoMB.naoEstaEmModoInclusaoOuEdicao}" />	
+				
+				Valor<h:inputText id="valor" 
+								  value="#{produtoMB.produto.valor}" 
+								  required="true" label="Vaor do produto" 
+								  disabled="#{produtoMB.naoEstaEmModoInclusaoOuEdicao}" >
+					<f:convertNumber minFractionDigits="2" maxFractionDigits="2" pattern="#,##0.##"  />
+					<f:validateDoubleRange minimum="0"  />
+					</h:inputText>
+
+					<h:outputText value="" />
+					<h:panelGroup>
+							<p:commandButton action="#{produtoMB.grava}"  value="Confirmar" 
+							 rendered="#{not produtoMB.naoEstaEmModoInclusaoOuEdicao}" />
+							<p:commandButton action="produto" value="Cancela" immediate="true" />
+					</h:panelGroup>
+
+			</h:panelGrid>
+			
+	</h:panelGroup>
+         
+    <br />
+	<br />
+	<h:panelGrid columns="3" >
+	<h4>Produtos cadastrados</h4>
+	<h:outputText value="&nbsp;&nbsp;&nbsp;" />
+	<p:commandButton action="#{produtoMB.novo}" value="Novo produto" >
+		<f:ajax  render="containerPainelFormulario" ></f:ajax>
+	</p:commandButton>
+	</h:panelGrid>
+
+	<h:panelGroup rendered="#{empty produtoMB.lista}">
+           <em>Sem produtos cadastrados.</em>
+    </h:panelGroup>
+    
+   <p:fieldset id="CamposProdutosCadastrados" legend="Listagem de Chinelos Cadastrados">
+	
+	<p:dataTable value="#{produtoMB.lista}" var="produto"  class="table" 
+	 			 rendered="#{not empty produtoMB.lista}" id="listaProdutos" >
+		
+		<p:column style="width:20px">
+           <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+           <p:draggable for="dragIcon" revert="true" helper="clone"/>
+         </p:column>
+		
+		<p:column headerText="Id">
+           <h:outputText value="#{produto.id}" />
+        </p:column>
+		
+		<p:column headerText="Modelo">
+                <h:outputText value="#{produto.modelo}" />
+        </p:column>
+		
+		<p:column headerText="Marca">
+            <h:outputText value="#{produto.marca}" />
+        </p:column>
+		
+		<p:column headerText="Tamanho">
+                <h:outputText value="#{produto.tamanho}" />
+        </p:column>
+		
+		<p:column headerText="Valor">
+				<f:facet name="header">Valor</f:facet>
+                <h:outputText value="#{produto.valor}" />
+                <!-- <f:convertNumber minFractionDigits="2" maxFractionDigits="2" pattern="#,##0.##"  /> -->
+        </p:column>
+						
+		<p:column>
+			<p:commandButton action="#{produtoMB.mostraDetalhes(produto)}" value="Detalhes" />
+		</p:column>									
+		
+		<p:column>
+			<p:commandButton action="#{produtoMB.preparaAlteracao(produto)}" value="Alterar" />
+		</p:column>						
+		
+		<p:column>
+			<p:commandButton action="#{produtoMB.remove(produto)}" value="Remover" />
+		</p:column>
+					
+	</p:dataTable>
+   </p:fieldset>		
+	
+  </h:form>               
+                                    
+        </div>
+    </ui:define>
+    
+
+</ui:composition>
+
+ </html>

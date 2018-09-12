@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/public/index.xhtml">
+	<ui:define name="title">Sistema WEBCHINELOS</ui:define>	   
+     <ui:define name="container">
+        <div class="row">
+             <p:fieldset id="CamposProdutosCadastrados" legend="Listagem de Produtos Cadastrados">
+				
+	<p:dataTable value="#{produtoMB.lista}" var="produto"  class="table" 
+	 			 rendered="#{not empty produtoMB.lista}" id="listaProdutos" >
+		
+		<p:column style="width:20px">
+           <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+           <p:draggable for="dragIcon" revert="true" helper="clone"/>
+         </p:column>
+		
+		<p:column headerText="Id">
+           <h:outputText value="#{produto.id}" />
+        </p:column>
+		
+		<p:column headerText="Modelo">
+                <h:outputText value="#{produto.modelo}" />
+        </p:column>
+		
+		<p:column headerText="Marca">
+            <h:outputText value="#{produto.marca}" />
+        </p:column>
+		
+		<p:column headerText="Tamanho">
+                <h:outputText value="#{produto.tamanho}" />
+        </p:column>
+		
+		<p:column headerText="Valor">
+				<f:facet name="header">Valor</f:facet>
+                <h:outputText value="#{produto.valor}" />
+                <!-- <f:convertNumber minFractionDigits="2" maxFractionDigits="2" pattern="#,##0.##"  /> -->
+        </p:column>
+        
+        <h:column>
+				<h:commandButton action="#{carrinhoComprasMB.adicionaItem(produto)}" value="Adicionar ao Carrinho" />
+		</h:column>
+								
+	</p:dataTable>
+   </p:fieldset>     
+        </div>
+    </ui:define>
+    
+
+</ui:composition>
+
+ </html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="index.xhtml">
+	
+<ui:define name="title">Listagem de Funcionário</ui:define>	
+ 
+ <ui:define name="container">
+   <div class="row">
+   	<h:form id="formFuncionario">
+   
+   	  		 	
+   		 	<h:panelGrid columns="2">
+   		 			
+   		 			Nome:<h:inputText value="#{funcionarioMB.funcionario.nome}" 
+	   						  size="50"
+	   						  id="nome" 
+							  label="nome" 
+							  required="true"/>
+	   		<br/>
+	   	    	    	
+			Funcao:<h:selectOneMenu value="#{funcionarioMB.funcionario.funcao}" 
+									id="funcao"
+									label="funcao"
+									required="true">
+	     				<f:selectItems value="#{funcionarioMB.funcoesFuncionarios}"/>
+					</h:selectOneMenu>
+			<br/>
+					
+			Curriculo:<h:inputTextarea value="#{funcionarioMB.funcionario.curriculo}" 
+									   rows="5" 
+									   cols="40" 
+									   id="curriculo"
+									   label="curriculo"
+									   required="true"/>
+			<br/>
+			
+			Senha:<h:inputSecret value="#{funcionarioMB.funcionario.senha}" 
+								 redisplay="" 
+								 id="senha"
+								 label="senha"
+								 required="true"/>
+			<br/>
+			<h:outputText value="" />
+			   <h:panelGroup>
+			   		
+			   		<p:commandButton action="#{funcionarioMB.grava()}"  value="Confirmar"/>
+					 <p:commandButton action="inicial" 
+									 value="Cancelar" 
+									 immediate="true"/> 
+				</h:panelGroup>
+   		 	
+   		 	</h:panelGrid>
+   		   		 
+   		 <br />
+			<br />
+   	
+   	<p:dataTable value="#{funcionarioMB.lista}" var="funcionario"  class="table" 
+		 			 rendered="#{not empty funcionarioMB.lista}" id="listaFuncionarios" >
+			
+			<p:column style="width:20px">
+	           <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+	           <p:draggable for="dragIcon" revert="true" helper="clone"/>
+	         </p:column>
+			
+			<p:column headerText="Id">
+	           <h:outputText value="#{funcionario.id}" />
+	        </p:column>
+			
+			<p:column headerText="Nome">
+	                <h:outputText value="#{funcionario.nome}" />
+	        </p:column>
+			
+			<p:column headerText="Funcao">
+	            <h:outputText value="#{funcionario.funcao}" />
+	        </p:column>
+													
+		</p:dataTable>
+   		
+	
+   		
+   	</h:form>
+   	
+   	
+   </div>	
+ </ui:define>
+</ui:composition>
+
+</html>

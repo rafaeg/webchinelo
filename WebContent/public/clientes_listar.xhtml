@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<ui:composition template="/public/index.xhtml">
+	
+<ui:define name="title">Listagem de Clientes</ui:define>	
+ <ui:define name="container">
+   <div class="row">
+   <h:form id="formCliente">
+   <h:panelGrid columns="3">
+	
+		Nome:<h:inputText value="#{clienteMB.cliente.nome}" 
+						  id="nome" 
+						  label="nome" 
+						  required="true" 
+						  requiredMessage="Favor informar o nome" >
+			 <f:validateLength  maximum="20" />
+			 </h:inputText><h:message for="nome"/>
+			 <br />
+		
+		tipo Cliente: <h:selectOneMenu value="#{clienteMB.cliente.tipoCliente}" 
+									   id="tipoCliente" 
+									   label="tipo Cliente" 
+									   required="true" >
+			            <f:selectItem itemLabel="" /> 
+			            <f:selectItems value="#{clienteMB.tiposClientes}" />
+		              </h:selectOneMenu><h:message for="tipoCliente"/>
+		<br />
+        
+        gostos Pessoais:<h:inputTextarea value="#{clienteMB.cliente.gostosPessoais}"
+										 rows="5" cols="40" 
+										 id="gostosPessoais" 
+										 label="gostos Pessoais"  
+										 required="true" >
+						<f:validateLength  maximum="20" />
+						</h:inputTextarea><h:message for="gostosPessoais"/>
+		<br />
+
+		senha:<h:inputSecret value="#{clienteMB.cliente.senha}" 
+							 redisplay="" 
+							 id="senha" 
+							 label="senha" 
+							 required="true" >
+				<f:validateLength minimum="5" maximum="5" />
+				</h:inputSecret><h:message for="senha"/>
+		<br />
+
+		sexo:<h:selectOneMenu value="#{clienteMB.cliente.sexo}" 
+							  id="sexo" 
+							  label="sexo" 
+							  required="true"  >
+				<f:selectItem itemLabel=""/>
+				<f:selectItems value="#{clienteMB.sexos}" />
+				</h:selectOneMenu><h:message for="sexo" />
+		<br />	
+
+		dataNascimento:<h:inputText value="#{clienteMB.cliente.dataNascimento}"
+ 									id="dataNascimento"  
+ 									label="data nascimento"  
+ 									required="true" >
+					   <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00" />
+						</h:inputText>
+ 					   <h:message for="dataNascimento"/>
+
+		cpf:<h:inputText value="#{clienteMB.cliente.cpf}" 
+						id="cpf" label="cpf"  
+						validatorMessage="Informar CPF no formato 999.999.999-99 ou somente os números " >
+						<f:validateRegex pattern="^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}(-|\.)?[0-9]{2}"></f:validateRegex>
+			</h:inputText>
+			<h:message for="cpf"/>
+
+ 		dataValidadeCartaoCredito:<h:inputText value="#{clienteMB.cliente.dataValidadeCartaoCredito}" 
+ 											   id="dataValidadeCartaoCredito" 
+ 											   label="data validade do cartao de credito"  >
+								  <f:convertDateTime  pattern="MM/yy"  />
+								  </h:inputText>
+								  <h:message for="dataValidadeCartaoCredito"/>		
+</h:panelGrid>
+		<br />
+		<p:commandButton action="#{clienteMB.grava()}" value="Salvar" />
+		
+		<p:commandButton action="inicial" value="Cancelar" immediate="true" />
+</h:form>		
+		<br />
+		<br />
+		<br />
+		<p:fieldset id="CamposClientesCadastrados" legend="Listagem de Clientes Cadastrados">
+        <p:dataTable id="clientes" var="cliente" value="#{clienteMB.lista}">
+            
+            <p:column style="width:20px">
+                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+            </p:column>
+ 
+            <p:column headerText="Id">
+                <h:outputText value="#{cliente.id}" />
+            </p:column>
+ 
+            <p:column headerText="Nome">
+                <h:outputText value="#{cliente.nome}" />
+            </p:column>
+ 
+            <p:column headerText="tipoCliente">
+                <h:outputText value="#{cliente.tipoCliente}" />
+            </p:column>
+ 			
+ 			<p:column headerText="DataDeNAscimento">
+                <f:facet name="header">dataNascimento</f:facet>
+				<h:outputText value="#{cliente.dataNascimento}"  >
+				<f:convertDateTime type="date"/>
+				</h:outputText>
+            </p:column>
+ 			
+        </p:dataTable>
+    </p:fieldset>
+   
+   </div>
+ </ui:define>	
+	
+</ui:composition> 
+</html>

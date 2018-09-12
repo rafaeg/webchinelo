@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+ <ui:composition template="/public/index.xhtml">
+  
+    <ui:define name="container">
+        <div class="row">
+            
+            <h:dataTable value="#{carrinhoComprasMB.pedido.itens}" var="item"  class="table" >
+		
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{item.produto.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Marca</f:facet>
+				<h:outputText value="#{item.produto.marca}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Modelo</f:facet>
+				<h:outputText value="#{item.produto.modelo}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Tamanho</f:facet>
+				<h:outputText value="#{item.produto.tamanho}" />
+			</h:column>			
+			<h:column>
+				<f:facet name="header">Valor unitário</f:facet>
+				<h:outputText value="#{item.produto.valor}" >
+				<f:convertNumber minFractionDigits="2" maxFractionDigits="2" pattern="#,##0.##"  />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Quantidade</f:facet>
+				<h:outputText value="#{item.quantidade}" >
+				<f:convertNumber pattern="#,##0" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">valor total</f:facet>
+				<h:outputText value="#{item.valorTotal}" >
+				<f:convertNumber pattern="#,##0.##" />
+				</h:outputText>
+				<f:facet name="footer">
+				<h:outputText value="#{carrinhoComprasMB.pedido.valorTotal}" >
+				<f:convertNumber pattern="#,##0.##" />
+				</h:outputText>
+				</f:facet>
+			</h:column>						
+			<h:column>
+				<h:commandButton action="#{carrinhoComprasMB.removeItem(item.produto)}" value="Remover do Carrinho" />
+			</h:column>
+		</h:dataTable>
+            
+                       
+        </div>
+    </ui:define>       
+        
+</ui:composition>
+
+
+
+</html>
